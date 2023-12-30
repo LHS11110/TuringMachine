@@ -3,14 +3,18 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class TuringMachine
 {
     // Direction
-    public final boolean R = true;
-    public final boolean L = false;
+    public static final boolean R = true;
+    public static final boolean L = false;
 
     private LinkedList<String> tape;
+    private String stateRegister;
+    private Iterator<String> head;
+
     private Set<String> symbols;
     private Set<String> states;
     private String blankSymbol;
@@ -22,6 +26,8 @@ public class TuringMachine
     public TuringMachine()
     {
         this.tape = new LinkedList<>();
+        this.stateRegister = null;
+        this.head = null;
         this.symbols = new HashSet<>();
         this.states = new HashSet<>();
         this.blankSymbol = null;
