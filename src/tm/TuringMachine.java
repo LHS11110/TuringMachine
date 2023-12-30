@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Arrays;
 
 public class TuringMachine
 {
@@ -11,29 +12,50 @@ public class TuringMachine
     public static final boolean R = true;
     public static final boolean L = false;
 
-    private LinkedList<String> tape;
+    private final LinkedList<String> tape;
     private String stateRegister;
     private Iterator<String> head;
 
-    private Set<String> symbols;
-    private Set<String> states;
+    private final Set<String> symbols;
+    private final Set<String> states;
     private String blankSymbol;
     private String initialState;
-    private Set<String> finalStates;
+    private final Set<String> finalStates;
     private String inputSymbols;
-    private HashMap<String[], String[]> transitionFunction;
+    private final HashMap<String[], String[]> transitionFunction;
 
     public TuringMachine()
     {
         this.tape = new LinkedList<>();
-        this.stateRegister = null;
+        this.stateRegister = "";
         this.head = null;
         this.symbols = new HashSet<>();
         this.states = new HashSet<>();
-        this.blankSymbol = null;
-        this.initialState = null;
+        this.blankSymbol = "";
+        this.initialState = "";
         this.finalStates = new HashSet<>();
-        this.inputSymbols = null;
+        this.inputSymbols = "";
         this.transitionFunction = new HashMap<>();
+    }
+
+    public void setInitState(String state)
+    {
+        this.initialState = state;
+    }
+
+    public String getInitState()
+    {
+        return this.initialState;
+    }
+
+    public void setFinalStates(String... states)
+    {
+        this.finalStates.clear();
+        this.finalStates.addAll(Arrays.asList(states));
+    }
+
+    public Set<String> getFinalStates()
+    {
+        return this.finalStates;
     }
 }
