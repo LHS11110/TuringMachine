@@ -23,8 +23,8 @@ public class TuringMachine
     private char blankSymbol;
     private String initialState;
     private final Set<String> finalStates;
-    private String inputSymbols;
-    private final HashMap<Object[], Object[]> actionTable;
+    private final Set<Character> inputSymbols;
+    private final HashMap<Object[], Object[]> transitionFunction;
 
     public TuringMachine()
     {
@@ -36,8 +36,8 @@ public class TuringMachine
         this.blankSymbol = ' ';
         this.initialState = "";
         this.finalStates = new HashSet<>();
-        this.inputSymbols = "";
-        this.actionTable = new HashMap<>();
+        this.inputSymbols = new HashSet<>();
+        this.transitionFunction = new HashMap<>();
     }
 
     public void setStates(String... states)
@@ -92,8 +92,7 @@ public class TuringMachine
     public void setSymbols(String symbols)
     {
         this.symbols.clear();
-        for (char c : symbols.toCharArray())
-            this.symbols.add(c);
+        this.symbols.addAll(Arrays.asList(symbols.chars().mapToObj(ch -> (char)ch).toArray(Character[]::new)));
     }
 
     public Set<Character> getSymbols()
@@ -101,21 +100,33 @@ public class TuringMachine
         return this.symbols;
     }
 
-    public void setInput(String symbols) throws Exception
+    public void setInputSymbols(String symbols) throws Exception
     {
         for (char c : symbols.toCharArray())
-            if (!this.symbols.contains(c))
+            if (!this.symbols.contains(c) || this.blankSymbol == c)
                 throw new Exception();
-        this.inputSymbols = symbols;
+        this.inputSymbols.addAll(Arrays.asList(symbols.chars().mapToObj(ch -> (char)ch).toArray(Character[]::new)));
     }
 
-    public String getInput()
+    public Set<Character> getInput()
     {
         return this.inputSymbols;
     }
 
-    public void addAction(String readState, char readSymbol, String )
+    public void addTransition(String currentState, char readSymbol, String nextState, char writeSymbol, boolean direction) throws Exception
     {
+        if (!this.states.contains(currentState) || !this.states.contains(nextState) || !this.symbols.contains(readSymbol) || !this.symbols.contains(writeSymbol))
+            throw new Exception();
+        this.transitionFunction.put(new Object[] {currentState, readSymbol}, new Object[] {nextState, writeSymbol, direction});
+    }
 
+    public void clearFunction()
+    {
+        this.transitionFunction.clear();
+    }
+
+    public HashMap<Object[], Object[]> getTransitionFunction()
+    {
+        return this.transitionFunction;
     }
 }
