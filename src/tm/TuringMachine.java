@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Arrays;
 import java.lang.Exception;
 import java.lang.Character;
@@ -16,7 +16,7 @@ public class TuringMachine
 
     private final LinkedList<Character> tape;
     private String stateRegister;
-    private Iterator<Character> head;
+    private ListIterator<Character> head;
 
     private final Set<Character> symbols;
     private final Set<String> states;
@@ -128,5 +128,17 @@ public class TuringMachine
     public HashMap<Object[], Object[]> getTransitionFunction()
     {
         return this.transitionFunction;
+    }
+
+    public String input(String str)
+    {
+        this.tape.addAll(Arrays.asList(str.chars().mapToObj(ch -> (char)ch).toArray(Character[]::new)));
+        this.head = this.tape.listIterator();
+        this.stateRegister = this.initialState;
+
+        while (this.states.contains(this.stateRegister) && !this.finalStates.contains(this.stateRegister))
+        {
+            Object[] objs = this.transitionFunction.get(new Object[] {this.stateRegister, this.head});
+        }
     }
 }
