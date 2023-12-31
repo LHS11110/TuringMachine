@@ -24,7 +24,7 @@ public class TuringMachine
     private String initialState;
     private final Set<String> finalStates;
     private String inputSymbols;
-    private final HashMap<String[], String[]> transitionFunction;
+    private final HashMap<Object[], Object[]> actionTable;
 
     public TuringMachine()
     {
@@ -37,7 +37,7 @@ public class TuringMachine
         this.initialState = "";
         this.finalStates = new HashSet<>();
         this.inputSymbols = "";
-        this.transitionFunction = new HashMap<>();
+        this.actionTable = new HashMap<>();
     }
 
     public void setStates(String... states)
@@ -112,5 +112,10 @@ public class TuringMachine
     public String getInput()
     {
         return this.inputSymbols;
+    }
+
+    public void addAction(String readState, char readSymbol, String )
+    {
+
     }
 }
